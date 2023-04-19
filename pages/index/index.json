@@ -1,0 +1,10 @@
+{
+  "backgroundColor": "#5B91F8",
+  "enablePullDownRefresh": true,
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "i-toast": "../../components/toast/index",
+    "login": "/components/loginReg/index",
+    "popup": "../../components/popup/index"
+  }
+}

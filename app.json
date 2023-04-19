@@ -1,0 +1,19 @@
+{
+  "pages":[
+     
+    "pages/index/index",
+    "pages/orderDetail/index",   
+    "pages/reg/index",
+    "pages/detail/index", 
+    "pages/loginReg/index",
+    
+    "pages/logs/logs"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "会拉拉",
+    "navigationBarTextStyle":"black",
+    "navigationStyle": "custom"
+  }
+}

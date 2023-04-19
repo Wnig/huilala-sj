@@ -1,0 +1,5 @@
+<view class='pop-mask' bindtap='close' animation='{{animationFade}}' catchtouchmove='prevent'>
+  <view class='wrapper' catchtap='prevent' animation='{{animationSlide}}'>
+    <slot></slot>
+  </view>
+</view>

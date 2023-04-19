@@ -1,0 +1,99 @@
+/* 注册-完善资料 */
+page {
+  height: 100%;
+  background: #FFFFFF;
+}
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 44px;
+  background: #FFFFFF;
+  z-index: 9999;
+}
+.header text {
+  font-family: PingFangSC-Semibold;
+  font-size: 18px;
+  color: #000000;
+  letter-spacing: 0;
+  text-align: center;
+  line-height: 17px;
+}
+.header_ {
+  height: 44px;
+}
+
+/* 完善信息 */
+.info {
+  margin-bottom: 36rpx;
+  padding: 0 38rpx;
+}
+.info .item {
+  display: flex;
+  align-items: center;
+  height: 140rpx;
+}
+.info .item .label {
+  width: 240rpx;
+  font-family: PingFangSC-Regular;
+  font-size: 16px;
+  color: #000000;
+  letter-spacing: 0;
+  line-height: 16px;
+  text-align: left;
+}
+.info .item input {
+  flex: 1;
+  font-family: PingFangSC-Regular;
+  font-size: 16px;
+}
+
+.rule {
+  display: flex;
+  align-items: center;
+  margin-bottom: 58rpx;
+  padding: 0 38rpx;
+}
+.rule .icon {
+  width: 36rpx;
+  height: 36rpx;
+  margin-right: 18rpx;
+}
+.rule view {
+  font-family: PingFangSC-Regular;
+  font-size: 12px;
+  color: #484848;
+  letter-spacing: 0;
+  text-align: center;
+  line-height: 12px;  
+}
+.rule view text {
+  color: var(--themeColor);
+}
+
+.btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 686rpx;
+  height: 88rpx;
+  margin: 0 auto;
+  font-family: PingFangSC-Regular;
+  font-size: 16px;
+  color: #FFFFFF;
+  letter-spacing: 0;
+  text-align: center;
+  line-height: 16px;
+  background: #CCCCCC;
+  box-shadow: 0 5px 7px 0 rgba(0,0,0,0.15);
+  border-radius: 100px;
+}
+
+.finished {
+  background-image: linear-gradient(-90deg, #71ABFF 2%, #5B91F8 98%);
+  box-shadow: 0 5px 7px 0 rgba(0,0,0,0.15);
+}

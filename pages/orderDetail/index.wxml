@@ -1,0 +1,167 @@
+<block wx:if="{{initData}}">
+  <!-- 头部 -->
+  <view class='header' style="padding-top: {{deviceInfo.statusBarHeight}}px;">
+    <view class='header-cons'>
+      <image class='back' src='/images/back.png' bindtap='backPre'></image>
+      <text>行程详情</text>  
+    </view>
+  </view>
+  <view class='header_' style="padding-top: {{deviceInfo.statusBarHeight}}px;"></view>
+
+  <view class='map-con' style='height: {{isUp ? (deviceInfo.screenHeight - (deviceInfo.statusBarHeight + 319)) : (deviceInfo.screenHeight - (deviceInfo.statusBarHeight + 319) + 130)}}px' >
+    <map id="mymap" subkey="FDRBZ-2T7RI-J5MGG-5OOCF-7D7KQ-N4FDM"  enable-rotate="true" scale="{{scale}}" show-location='{{showLocation}}' longitude="{{nowLon}}" latitude="{{nowLat}}" markers="{{markers}}" polyline="{{polyline}}"></map>
+    <cover-image wx:if="{{obj.tripStatus != '2'}}" class='dw' src='/images/dw@3x.png' bindtap="moveToLocation"></cover-image>
+    <cover-view wx:if="{{obj.tripStatus == '2'}}" class='end-btn'  data-type="2" bindtap='isEndOrder'>
+      <cover-view>行程</cover-view>
+      <cover-view>结束</cover-view>
+    </cover-view>
+
+    <block wx:if="{{obj.tripStatus == '1' || obj.tripStatus == '2'}}">
+      <cover-image bindtap='isUpDown' wx:if="{{!isUp}}" class='up-down-btn' src='/images/yb@3x.png'></cover-image>
+      <cover-image bindtap='isUpDown' wx:else  class='up-down-btn' src="/images/yb-1@3x.png"></cover-image>
+    </block>
+  </view>
+
+<view class='con'>
+  <view class='part2'>
+      <view class='car-info xpk-1px-b'>
+        <view class='label {{(obj.tripStatus != "1" && obj.tripStatus != "4") ? "finish": ""}}'>{{obj.statusText}}</view>
+        <view class='item'>
+          <view class='car-num'>{{obj.licenseNum}}</view>
+          <text class='car-type'>{{obj.vehicleName}}</text>     
+        </view>
+        <view class='item'>
+          <image class='car' mode='aspectFill'  src="{{obj.vehicleCover}}"></image>   
+          <image class='driver' src='{{obj.driverAvatar}}'></image>
+        </view>
+        <view class='item'>
+          <view class='name'>{{obj.driverName}}</view>
+          <view class='ushare'>{{obj.driverGrade}}</view>
+          <text class="order-num">已接{{obj.driverOrders}}单</text>     
+        </view>
+      </view>
+      <view class="operate xpk-1px-b">
+        <view class='item' bindtap='callDriver'>
+          <image src='/images/dh@3x.png'></image>
+          <text>联系乘客</text>
+        </view>
+        <view class='item xpk-1px-l'  wx:if="{{obj.tripStatus == '1'}}" data-type="1" bindtap='isEndOrder'>
+          <image src='/images/xcks@3x.png'></image>
+          <text>行程开始</text>
+        </view>
+        <view class='item xpk-1px-l' wx:if="{{obj.tripStatus == '2'}}" data-type="2" bindtap='isEndOrder'>
+          <image src='/images/xcjs@3x.png' ></image>
+          <text>行程结束</text>
+        </view>
+        <view wx:if="{{obj.tripStatus == '3' || obj.tripStatus == '4'}}" class='item xpk-1px-l' bindtap='openMask'>
+          <image src='/images/pjsj@3x.png'></image>
+          <text>评价乘客</text>
+        </view>
+      </view>
+      <view wx:if="{{isUp}}"  class='route-info xpk-1px-b'>
+        <view class='left'>
+          <view class='item'>
+            <image src='/images/ck@3x.png'></image>
+            <text>{{obj.passengerName}}</text>
+            <label>乘客</label>
+          </view>
+          <view class='item'>
+            <image src='/images/lxdh@3x.png'></image>
+            <text>{{obj.passengerPhone}}</text>
+          </view>
+        </view>
+        <view class='left'>
+          <view class='item'>
+            <image src='/images/sj@3x.png'></image>
+            <text>{{obj.outTime}} 出发</text>
+          </view>
+          <view class='item' wx:if="{{obj.arriveTime != ''}}">
+            <image src='/images/sj@3x.png'></image>
+            <text>{{obj.arriveTime}} 返回</text>
+          </view>
+          <view class='item' wx:if="{{obj.flightNo != ''}}">
+            <image src='/images/hbh@3x.png'></image>
+            <text>{{obj.flightNo}}</text>
+          </view>
+        </view>
+        <view class='right'>
+          <view class='item'>
+            <view class='dot green'></view>
+            <text>{{obj.outAddress}}</text>
+          </view>
+          <view class='item item-last'>
+            <view class='dot yellow'></view>
+            <text>{{obj.arriveAddress}}</text>
+          </view>
+        </view>
+      </view>    
+  </view>
+</view>
+
+
+  <!-- 未评价 -->
+  <block wx:if="{{isMask}}">
+    <cover-view class='mask' catchtouchmove='preventEvent' bindtap='closeMask'>
+      <cover-view class='mask-con' catchtap='maskcon'>
+        <cover-view class='head'>
+          <cover-view class='text'>评价</cover-view>
+          <cover-image catchtap='closeMask' src="/images/cancel.png"></cover-image>
+        </cover-view>   
+        <cover-view class='content'>
+          <cover-view class='part1'>
+            <cover-view wx:for="{{5}}" wx:key="item" data-index='{{index+1}}'  catchtap="evaStarClick">
+              <cover-image wx:if="{{userEvaStar > index}}" class='selected' src='/images/spxq_pl_lx@3x.png'></cover-image>
+              <cover-image wx:else class='select' src='/images/spxq_pl@3x.png'></cover-image>          
+            </cover-view>
+          </cover-view>
+          <cover-view class='part2' style='{{userEvaStar ? "opacity: 1": "opacity: 0"}}'>满意度 {{userEvaStar}}分</cover-view>
+          <cover-view class='part3'>
+            <cover-view catchtap='selLabel' class='btn-label {{item.isSelect ? "btn-label-sel": ""}}' wx:for="{{evaluateArr}}" wx:key="item" data-index='{{index}}' data-key="{{item.key}}">{{item.value}}</cover-view>
+          </cover-view>
+        </cover-view> 
+      </cover-view>
+    </cover-view>
+    <view class='mask-bottom' catchtouchmove='preventEvent'>
+      <view class='textarea'>
+        <textarea placeholder='其他想说的' maxlength='60' bindinput='textCon' value='{{textareaValue}}'></textarea>
+        <view>{{nowLen}}／60</view>
+      </view>
+      <view class='btn {{isEvaluate ? "btn-yellow": ""}}' bindtap='evaluate'>马上评价</view>
+    </view>  
+  </block> 
+
+  <!-- 已评价 -->
+  <block wx:if="{{isMasks}}">
+    <cover-view class='masks' catchtouchmove='preventEvent' bindtap='closeMask'>
+      <cover-view class='mask-con' catchtap='maskcon'>
+        <cover-view class='head'>
+          <cover-view class='text'>评价</cover-view>
+          <cover-image catchtap='closeMask' src="/images/cancel.png"></cover-image>
+        </cover-view>   
+        <cover-view class='content'>
+          <cover-view class='part1'>
+            <cover-view wx:for="{{evalObj.score}}" wx:key="item" data-index='{{index+1}}'>
+              <cover-image wx:if="{{evalObj.score > index}}" class='selected' src='/images/spxq_pl_lx@3x.png'></cover-image>
+              <cover-image wx:else class='select' src='/images/spxq_pl@3x.png'></cover-image>          
+            </cover-view>
+          </cover-view>
+          <cover-view class='part2'>满意度 {{evalObj.score}}分</cover-view>
+          <cover-view class='part3'>
+            <cover-view  class='btn-label {{item.isSelect ? "btn-label-sel": ""}}' wx:for="{{evalObj.labelList}}" wx:key="item" data-index='{{index}}'>{{item}}</cover-view>
+          </cover-view>
+          <cover-view class='evaluate'>{{evalObj.content}}</cover-view>
+        </cover-view> 
+      </cover-view>
+    </cover-view>
+  </block>
+  
+</block>
+
+
+
+
+
+
+<!-- ========   toast   ============ -->
+<view wx:if="{{isSuccess}}" class='toast'>恭喜你评价成功！</view>
+

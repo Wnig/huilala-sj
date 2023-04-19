@@ -1,0 +1,122 @@
+<!-- 详情 -->
+<!-- 头部 -->
+<block wx:if="{{initData}}">
+  <view class='header' style="padding-top: {{deviceInfo.statusBarHeight}}px;">
+    <view class='header-cons'>
+      <image class='back' src='/images/back.png' bindtap='backPre'></image>
+      <text>全部行程</text>  
+    </view>
+  </view>
+  <view class='header_' style="padding-top: {{deviceInfo.statusBarHeight}}px;"></view>
+
+  <view class='header-con' style='top:{{deviceInfo.statusBarHeight  + 44}}px;'>
+    <view class='head xpk-1px-b'>
+      <view class='part1 xpk-1px'>
+        <input placeholder='请输入车牌号或司机/乘客手机号'
+          class='in-put'
+          value='{{searchText}}'
+          confirm-type='search'
+          bindconfirm='onConfirm'
+          bindinput='onInput'
+          bindfocus='onFocus'>
+        </input>
+        <image wx:if='{{deleteBtn}}' class='delicon' catchtap='deleteSearchText' src="/images/cancel.png"></image>
+      </view>
+      <!-- <text wx:if='{{!searchText||isSearch&&!isEdit}}' class='part2' bindtap='backLast'>取消</text> -->
+      <!-- wx:if='{{!isSearch&&searchText&&showSearchBtn}}' -->
+      <text class='part2' bindtap='onConfirm'>搜索</text>
+    </view>
+  </view>
+
+  <view class='list-con' wx:if="{{isSear}}" style="height: {{deviceInfo.screenHeight - (deviceInfo.statusBarHeight + 141)}}px">
+    <view class='item' wx:for="{{searchList}}" wx:key="item" bindtap='selSearchItem' data-item="{{item}}">{{item}}</view>
+  </view>
+
+  <scroll-view wx:if="{{!isSear&&orderDetailList.length != 0}}"  class='scroll-container' scroll-y='{{true}}' bindscrolltolower='onScrollBottom'>
+    <view class='order-item' wx:for="{{orderDetailList}}" wx:key="item">
+      <view class='car-info xpk-1px-b'>
+        <view class='label {{(item.tripStatus != "1" && item.tripStatus != "4") ? "finish": ""}}'>{{item.statusText}}</view>
+        <view class='item'>
+          <view class='car-num'>{{item.licenseNum}}</view>
+          <text class='car-type'>{{item.vehicleName}}</text>     
+        </view>
+        <view class='item'>
+          <image class='car' mode='aspectFill'  src="{{item.vehicleCover}}"></image>   
+          <image class='driver' src='{{item.driverAvatar}}'></image>
+        </view>
+        <view class='item'>
+          <view class='name'>{{item.driverName}}</view>
+          <view class='ushare'>{{item.driverGrade}}</view>
+          <text class="order-num">已接{{item.driverOrders}}单</text>     
+        </view>
+      </view>
+      <view class="operate xpk-1px-b" wx:if="{{item.tripStatus != '5' && item.tripStatus != '6'}}">
+        <view class='item' data-phone="{{item.driverPhone}}" data-item="{{item}}" bindtap='callDriver'>
+          <image src='/images/dh@3x.png'></image>
+          <text>联系乘客</text>
+        </view>
+        <view class='item xpk-1px-l' data-eval="no" data-id="{{item.id}}" data-obj="{{item}}"  bindtap='enterPage'>
+          <image src='/images/xc@3x.png'></image>
+          <text>行程详情</text>
+        </view>
+        <view data-eval="yes" data-id="{{item.id}}" data-obj="{{item}}" bindtap='enterPage' wx:if="{{item.tripStatus == '3' || item.tripStatus == '4'}}" class='item xpk-1px-l'>
+          <image src='/images/pjsj@3x.png'></image>
+          <text>评价乘客</text>
+        </view>
+      </view>
+      <view class='route-info'>
+        <view class='left'>
+          <view class='item'>
+            <image src='/images/ck@3x.png'></image>
+            <text>{{item.passengerName}}</text>
+            <label>乘客</label>
+          </view>
+          <view class='item'>
+            <image src='/images/lxdh@3x.png'></image>
+            <text>{{item.passengerPhone}}</text>
+          </view>
+        </view>
+        <view class='left'>
+          <view class='item'>
+            <image src='/images/sj@3x.png'></image>
+            <text>{{item.outTime}} 出发</text>
+          </view>
+          <view class='item' wx:if="{{item.arriveTime != ''}}">
+            <image src='/images/sj@3x.png'></image>
+            <text>{{item.arriveTime}}返回</text>
+          </view>
+          <view class='item' wx:if="{{item.flightNo != ''}}">
+            <image src='/images/hbh@3x.png'></image>
+            <text>{{item.flightNo}}</text>
+          </view>
+        </view>
+        <view class='right'>
+          <view class='item'>
+            <view class='dot green'></view>
+            <text>{{item.outAddress}}</text>
+          </view>
+          <view class='item item-last'>
+            <view class='dot yellow'></view>
+            <text>{{item.arriveAddress}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class='is-loading' wx:if='{{hasMore}}'>
+      <text class='icon-Loading icon'></text>
+      <text class='text'>正在加载中</text>
+    </view>
+    <view class='no-more' wx:else>
+      <text class='line'></text>
+      <text class='text'>无更多内容了~</text>
+      <text class='line'></text>
+    </view>
+  </scroll-view>  
+  <view class='no' wx:else>
+    <image class='nodata' src='/images/index.svg'></image>
+  </view>
+</block>
+
+
+

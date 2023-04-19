@@ -1,0 +1,16 @@
+<!-- 登录注册 -->
+<!-- 头部 -->
+<view class='header' style="padding-top: {{deviceInfo.statusBarHeight * 2}}rpx;">
+  <text>登录注册</text>
+</view>
+<view class='header_' style="padding-top: {{deviceInfo.statusBarHeight * 2}}rpx;"></view>
+
+<!-- 内容 -->
+<view class="content" style='height: {{(deviceInfo.screenHeight - deviceInfo.statusBarHeight - 44) * 2}}rpx'>
+  <text class='tip'>  
+    您好，
+    欢迎使用会拉拉出行
+  </text>
+  <view class='btn login-btn'>登录</view>
+  <view class='btn reg-btn' bindtap='regPage'>企业注册</view>
+</view>

@@ -1,0 +1,19 @@
+<!-- 登录注册 -->
+<!-- 头部 -->
+<view class='header' style="padding-top: {{item.statusBarHeight}}px;">
+  <text>登录</text>
+</view>
+<view class='header_' style="padding-top: {{item.statusBarHeight}}px;"></view>
+
+<!-- 内容 -->
+<view class="content" style='height: {{(item.screenHeight - item.statusBarHeight - 44)}}px'>
+  <view class='tip'>  
+    <view>您好，</view> 
+    <view>欢迎使用<text>会拉拉出行</text></view> 
+  </view>
+  <view class='btn login-btn'>登录<button class="button" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber"></button></view>
+  <!-- <view class='btn reg-btn'>企业注册<button class="button" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber"></button></view> -->
+</view>
+
+<!-- ========   toast   ============ -->
+<i-toast id="toast" />

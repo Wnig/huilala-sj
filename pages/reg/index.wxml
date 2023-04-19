@@ -1,0 +1,33 @@
+<!-- 注册-完善资料 -->
+<!-- 头部 -->
+<view class='header' style="padding-top: {{deviceInfo.statusBarHeight}}px;">
+  <text>完善资料</text>
+</view>
+<view class='header_' style="padding-top: {{deviceInfo.statusBarHeight}}px;"></view>
+
+<!-- 内容 -->
+<view class="content" style='height: {{(deviceInfo.screenHeight - deviceInfo.statusBarHeight - 44)}}px'>
+  <view class='info'>
+    <view class='item xpk-1px-b'>
+      <view class='label'>联系人姓名</view>
+      <input type='text' maxlength='6' placeholder='请输入联系人姓名' value='{{username}}' data-type="username" bindinput='inputVal'></input>
+    </view>
+    <view class='item xpk-1px-b'>
+      <view class='label'>联系人手机号</view>
+      <input type='number' maxlength='11' placeholder='请输入联系人手机号' value='{{phone}}' data-type="phone" bindinput='inputVal'></input>
+    </view>
+    <view class='item xpk-1px-b'>
+      <view class='label'>企业名称</view>
+      <input type='text' maxlength='13' placeholder='请输入企业名称' value='{{company}}' data-type="company" bindinput='inputVal'></input>
+    </view>
+  </view>
+  <view class='rule' bindtap='rule'>
+    <image class='icon' wx:if="{{isSelected}}" src="/images/tx_xz@3x.svg"></image> 
+    <image class='icon' wx:else src="/images/Oval@3x.svg"></image> 
+    <view>我已同意<text>《会拉拉出行企业服务协议》</text></view> 
+  </view>
+  <view class='btn {{isFinished ? "finished": ""}}' bindtap='submit'>完成</view>
+</view>
+
+<!-- ========   toast   ============ -->
+<i-toast id="toast" />

@@ -1,0 +1,159 @@
+<view class='init' wx:if="{{initData}}">
+  <view class='cons' wx:if="{{isLogin}}">
+    <!-- 首页 -->
+    <view class='header' style="padding-top: {{deviceInfo.statusBarHeight}}px;">
+      <text class='title'>会拉拉司机端</text>
+    </view>
+    <view class='header_' style="padding-top: {{deviceInfo.statusBarHeight}}px;"></view>
+
+    <view class='cont'>
+      <view class='part1'>
+        <view class='left'>
+          <view class='today'>今天</view>
+          <view class='date'>{{nowData}}{{week}}</view>      
+        </view>
+        <view class='check-order' data-url="../detail/index" bindtap='enterPage'>
+          <text>查看历史行程 </text> 
+          <image src='/images/next-w.svg'></image>
+        </view>
+      </view>
+      <!--banner滚动图  -->
+      <view class="banner">
+        <swiper bindchange='onSlideChangeEnd' id="swiper" indicator-dots="{{indicatorDots}}" circular='{{circular}}' autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+          <block wx:if="{{driverTodayTrip.length}}">
+            <swiper-item wx:for="{{driverTodayTrip}}" wx:key="item">
+              <view class='part2'>
+                  <view class='car-info xpk-1px-b'>
+                    <view class='label {{(item.tripStatus != "1" && item.tripStatus != "4") ? "finish": ""}}'>{{item.statusText}}</view>
+                    <view class='item'>
+                      <view class='car-num'>{{item.licenseNum}}</view>
+                      <text class='car-type'>{{item.vehicleName}}</text>     
+                    </view>
+                    <view class='item'>
+                      <image class='car' mode='aspectFill'  src="{{item.vehicleCover}}"></image>   
+                      <image class='driver' src='{{item.driverAvatar}}'></image>
+                    </view>
+                    <view class='item'>
+                      <view class='name'>{{item.driverName}}</view>
+                      <view class='ushare'>{{item.driverGrade}}</view>
+                      <text class="order-num">已接{{item.driverOrders}}单</text>     
+                    </view>
+                  </view>
+                  <view class="operate xpk-1px-b">
+                    <view class='item' data-phone="{{item.passengerPhone}}" data-item="{{item}}" bindtap='callDriver'>
+                      <image src='/images/dh@3x.png'></image>
+                      <text>联系乘客</text>
+                    </view>
+                    <view class='item xpk-1px-l' data-eval="no" data-id="{{item.id}}" data-obj="{{item}}"  bindtap='enterPage2'>
+                      <image src='/images/xc@3x.png'></image>
+                      <text>行程详情</text>
+                    </view>
+                  </view>
+                  <view class='route-info xpk-1px-b'>
+                    <view class='left'>
+                      <view class='item'>
+                        <image src='/images/ck@3x.png'></image>
+                        <text>{{item.passengerName}}</text>
+                        <label>乘客</label>
+                      </view>
+                      <view class='item'>
+                        <image src='/images/lxdh@3x.png'></image>
+                        <text>{{item.passengerPhone}}</text>
+                      </view>
+                    </view>
+                    <view class='left'>
+                      <view class='item'>
+                        <image src='/images/sj@3x.png'></image>
+                        <text>{{item.outTime}} 出发</text>
+                      </view>
+                      <view class='item' wx:if="{{item.arriveTime}}">
+                        <image src='/images/sj@3x.png'></image>
+                        <text>{{item.arriveTime}} 返回</text>
+                      </view>
+                      <view class='item' wx:if="{{item.flightNo}}">
+                        <image src='/images/hbh@3x.png'></image>
+                        <text>{{item.flightNo}}</text>
+                      </view>
+                    </view>
+                    <view class='right'>
+                      <view class='item'>
+                        <view class='dot green'></view>
+                        <text>{{item.outAddress}}</text>
+                      </view>
+                      <view class='item item-last'>
+                        <view class='dot yellow'></view>
+                        <text>{{item.arriveAddress}}</text>
+                      </view>
+                    </view>
+                  </view>
+                  <view class='more-info'>
+                    <!-- <view wx:if="{{item.tripStatus == '1'}}" class='btn btn-yellow' data-id="{{item.id}}" data-type="1" data-eval="no" data-obj="{{item}}" bindtap='isStartTrip'>开始派车</view> -->
+                    <view wx:if="{{item.tripStatus == '1'}}" class='btn btn-yellow' data-id="{{item.id}}" data-type="1" data-eval="no" data-obj="{{item}}" bindtap='isEndOrder'>行程开始</view>
+                    <!-- <block wx:elif="{{item.tripStatus == '2'}}" > -->
+                      <!-- <view wx:if="{{isStartTrip}}" class='btn btn-gray' data-id="{{item.id}}" data-type="2" data-eval="no" data-obj="{{item}}" bindtap='isEndOrder'>确认接客</view> -->
+                      <view wx:elif="{{item.tripStatus == '2'}}" class='btn btn-gray' data-id="{{item.id}}" data-type="2" data-eval="no" data-obj="{{item}}" bindtap='isEndOrder'>行程结束</view>
+                    <!-- </block> -->
+                    <view wx:elif="{{item.tripStatus == '3'}}" class='btn btn-yellow' data-id="{{item.id}}"  data-eval="yes" data-obj="{{item}}" bindtap='enterPage2'>马上评价</view>
+                    <view wx:else class='btn btn-gray'>已完成</view>
+                  </view>          
+              </view>
+            </swiper-item>
+          </block>
+          <swiper-item wx:else>
+            <view class='part2'>
+              <view class='no'>
+                <image class='nodata' src='/images/kym@3x.svg'></image>
+                <text>今日暂无行程！</text>
+              </view>         
+            </view>
+          </swiper-item>
+
+        </swiper>
+      </view>    
+    </view>
+  </view>
+
+  <block wx:else>
+    <view class='login-con'>
+      <view class='header' style="padding-top: {{deviceInfo.statusBarHeight}}px;">
+        <text>登录</text>
+      </view>
+      <view class='header_' style="padding-top: {{deviceInfo.statusBarHeight}}px;"></view>
+
+        <!-- 内容 -->
+        <view class="content" style='height: {{(deviceInfo.screenHeight - deviceInfo.statusBarHeight - 44)}}px'>
+          <view class='tip'>  
+            <view>您好，</view> 
+            <view>欢迎使用<text>会拉拉出行</text></view> 
+          </view>
+          <view class='btn login-btn'>登录<button class="button" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber"></button></view>
+        </view>
+    </view>
+  </block>
+</view>
+
+
+<!-- ========   toast   ============ -->
+<i-toast id="toast" />
+
+<!-- 咨询弹窗 -->
+<view class='slide-up_popup' bindtap='closePopup' catchtouchmove='preventEvent' wx:if='{{customerService}}' animation='{{popupFade}}'>
+    <view class='slot-wrapper' animation='{{popSlide}}' catchtap='preventEvent'>
+        <view class='head'>
+            <text class='text'>请选择</text>
+            <text class='icon-gb' bindtap='closePopup'></text>
+        </view>
+        <view class='main'>
+            <view class='item' bindtap='callService'>
+                <image mode='aspectFill' src='/images/dhkf@3x.svg' class='icon'></image>
+                <text class='text'>电话客服</text>
+            </view>
+            <view class='item'>
+                <image mode='aspectFill' src='/images/zxkf@3x.svg' class='icon'></image>
+                <text class='text'>在线客服</text>
+                <button class="contact_button" open-type="contact" session-from="weapp"></button>
+            </view>
+        </view>
+    </view>
+</view>
+
